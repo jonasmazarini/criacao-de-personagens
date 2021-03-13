@@ -3,6 +3,7 @@ var Classe;
 var Raca;
 var Background;
 var Tendencia;
+var Habilidades;
 
 //Arrays das possibilidades
 var classes = [
@@ -75,6 +76,12 @@ function randomTendencia() {
   return Math.floor(Math.random() * tendencias.length);
 }
 
+function randomHabilidades() {
+  min = Math.ceil(3);
+  max = Math.floor(18);
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
 //Seleção do Input Botão
 const button = document.querySelector("input");
 
@@ -95,8 +102,21 @@ function criaPersonagem() {
   document.getElementById("head-raca").innerText = "Raça";
   document.getElementById("head-background").innerText = "Background";
   document.getElementById("head-tendencia").innerText = "Tendência";
+  document.getElementById("head-habilidades").innerText = "Habilidades";
   document.getElementById("classe").innerText = Classe;
   document.getElementById("raca").innerText = Raca;
   document.getElementById("background").innerText = Background;
   document.getElementById("tendencia").innerText = Tendencia;
+  document.getElementById("habilidades").innerText =
+    randomHabilidades() +
+    ", " +
+    randomHabilidades() +
+    ", " +
+    randomHabilidades() +
+    ", " +
+    randomHabilidades() +
+    ", " +
+    randomHabilidades() +
+    ", " +
+    randomHabilidades();
 }
