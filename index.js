@@ -1,9 +1,10 @@
 //Variáveis dos Personagens
-var Classe;
-var Raca;
-var Background;
-var Tendencia;
-var Habilidades;
+var Classe = "";
+var Raca = "";
+var Background = "";
+var Tendencia = "";
+var Habilidades = [];
+var Habilidade = 0;
 
 //Arrays das possibilidades
 var classes = [
@@ -76,10 +77,26 @@ function randomTendencia() {
   return Math.floor(Math.random() * tendencias.length);
 }
 
+function sortfunction(a, b) {
+  return a - b;
+}
+
 function randomHabilidades() {
-  min = Math.ceil(3);
-  max = Math.floor(18);
-  return Math.floor(Math.random() * (max - min)) + min;
+  min = Math.ceil(1);
+  max = Math.floor(6);
+  arrayHabilidade = [
+    Math.floor(Math.random() * (max - min)) + min,
+    Math.floor(Math.random() * (max - min)) + min,
+    Math.floor(Math.random() * (max - min)) + min,
+    Math.floor(Math.random() * (max - min)) + min,
+  ];
+  arrayHabilidade.sort(sortfunction);
+  arrayHabilidade.reverse();
+  Habilidade = 0;
+  for (i = 0; i < 3; i++) {
+    Habilidade += arrayHabilidade[i];
+  }
+  return Habilidade;
 }
 
 //Seleção do Input Botão
@@ -95,6 +112,15 @@ function criaPersonagem() {
   var Raca = racas[randomRaca()];
   var Background = backgrounds[randomBackground()];
   var Tendencia = tendencias[randomTendencia()];
+  var Habilidades = [
+    randomHabilidades(),
+    randomHabilidades(),
+    randomHabilidades(),
+    randomHabilidades(),
+    randomHabilidades(),
+    randomHabilidades(),
+  ];
+  Habilidades.sort(sortfunction);
 
   //Imprimir o Personagem criado na tabela html
   document.getElementById("tabela").style.visibility = "visible";
@@ -107,16 +133,5 @@ function criaPersonagem() {
   document.getElementById("raca").innerText = Raca;
   document.getElementById("background").innerText = Background;
   document.getElementById("tendencia").innerText = Tendencia;
-  document.getElementById("habilidades").innerText =
-    randomHabilidades() +
-    ", " +
-    randomHabilidades() +
-    ", " +
-    randomHabilidades() +
-    ", " +
-    randomHabilidades() +
-    ", " +
-    randomHabilidades() +
-    ", " +
-    randomHabilidades();
+  document.getElementById("habilidades").innerText = Habilidades;
 }
