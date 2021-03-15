@@ -13,7 +13,7 @@ Abra o arquivo 'index.html', clicando em 'Criar Novo Personagem' a página irá 
 - Utilizado HTML, CSS, Javascript.
 
 ### 🔗 Deploy
-- [Vercel](http://vercel.com/jonasmazarini)
+- [Vercel](https://criacao-de-personagens-lnenwfww8-jonasmazarini.vercel.app/)
 
 ### 🤓 Autor
 - [Jonas Mazarini](https://www.linkedin.com/in/jonasmazarini/)
