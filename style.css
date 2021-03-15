@@ -5,12 +5,12 @@ body {
     background-size: cover;
 }
 
-.botao-pai {
+.button-container {
     width: 100%;
     text-align: center;
 }
 
-.botao {
+.button {
     background-color: #C0C0C0;
     font-size: large;
     font-weight: bold;

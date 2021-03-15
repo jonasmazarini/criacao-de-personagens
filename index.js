@@ -1,13 +1,12 @@
-//Variáveis dos Personagens
-var Classe = "";
-var Raca = "";
-var Background = "";
-var Tendencia = "";
-var Habilidades = [];
-var Habilidade = 0;
+//Character Variables
+var characterClass = "";
+var race = "";
+var background = "";
+var alignment = "";
+var abilityList = [];
 
 //Arrays das possibilidades
-var classes = [
+var classList = [
   "Bárbaro",
   "Bardo",
   "Bruxo",
@@ -21,7 +20,7 @@ var classes = [
   "Paladino",
   "Ranger",
 ];
-var racas = [
+var raceList = [
   "Anão",
   "Elfo",
   "Halfling",
@@ -35,7 +34,7 @@ var racas = [
   "Aarakocra",
   "Golias",
 ];
-var backgrounds = [
+var backgroundList = [
   "Acólito",
   "Artesão de Guilda",
   "Artista",
@@ -50,7 +49,7 @@ var backgrounds = [
   "Sábio",
   "Soldado",
 ];
-var tendencias = [
+var alignmentList = [
   "Leal e Bom",
   "Neutro e Bom",
   "Caótico e Bom",
@@ -62,76 +61,73 @@ var tendencias = [
   "Caótico e Mau",
 ];
 
-//Random Functions das possibilidades
-function randomClasse() {
-  return Math.floor(Math.random() * classes.length);
+//Random Functions of the possibilities
+function randomClass() {
+  return Math.floor(Math.random() * classList.length);
 }
 
-function randomRaca() {
-  return Math.floor(Math.random() * racas.length);
+function randomRace() {
+  return Math.floor(Math.random() * raceList.length);
 }
 function randomBackground() {
-  return Math.floor(Math.random() * backgrounds.length);
+  return Math.floor(Math.random() * backgroundList.length);
 }
-function randomTendencia() {
-  return Math.floor(Math.random() * tendencias.length);
+function randomAlignment() {
+  return Math.floor(Math.random() * alignmentList.length);
 }
 
 function sortfunction(a, b) {
   return a - b;
 }
 
-function randomHabilidades() {
-  min = Math.ceil(1);
-  max = Math.floor(6);
-  arrayHabilidade = [
-    Math.floor(Math.random() * (max - min)) + min,
-    Math.floor(Math.random() * (max - min)) + min,
-    Math.floor(Math.random() * (max - min)) + min,
-    Math.floor(Math.random() * (max - min)) + min,
-  ];
-  arrayHabilidade.sort(sortfunction);
-  arrayHabilidade.reverse();
-  Habilidade = 0;
-  for (i = 0; i < 3; i++) {
-    Habilidade += arrayHabilidade[i];
-  }
-  return Habilidade;
+//Rolling 4d6 and adding the 3 largest numbers, according to the rules in the Player's Handbook
+function sumarrayDices(arrayDices) {
+  arrayDices.sort(sortfunction);
+  arrayDices.reverse();
+  arrayDices.pop();
+  return arrayDices.reduce((total, num) => total + num);
 }
 
-//Seleção do Input Botão
+function createRandomAbility() {
+  min = Math.ceil(1);
+  max = Math.floor(6);
+  arrayDices = [];
+
+  while (arrayDices.length <= 3) {
+    arrayDices.push(Math.floor(Math.random() * (max - min)) + min);
+  }
+  return sumarrayDices(arrayDices);
+}
+
+//Input Selection Button
 const button = document.querySelector("input");
 
-//Listener do Botão
-button.addEventListener("click", criaPersonagem);
+//Button Listener
+button.addEventListener("click", createCharacter);
 
-//Função para gerar o novo personagem Random
-function criaPersonagem() {
-  //Random das características
-  var Classe = classes[randomClasse()];
-  var Raca = racas[randomRaca()];
-  var Background = backgrounds[randomBackground()];
-  var Tendencia = tendencias[randomTendencia()];
-  var Habilidades = [
-    randomHabilidades(),
-    randomHabilidades(),
-    randomHabilidades(),
-    randomHabilidades(),
-    randomHabilidades(),
-    randomHabilidades(),
-  ];
-  Habilidades.sort(sortfunction);
+//Function to generate the new Random Character
+function createCharacter() {
+  //Random of the Characteristics
+  var characterClass = classList[randomClass()];
+  var race = raceList[randomRace()];
+  var background = backgroundList[randomBackground()];
+  var alignment = alignmentList[randomAlignment()];
+  var abilityList = [];
+  while (abilityList.length <= 5) {
+    abilityList.push(createRandomAbility());
+  }
+  abilityList.sort(sortfunction);
 
-  //Imprimir o Personagem criado na tabela html
-  document.getElementById("tabela").style.visibility = "visible";
-  document.getElementById("head-classe").innerText = "Classe";
-  document.getElementById("head-raca").innerText = "Raça";
+  //Printing the created character on the html elements
+  document.getElementById("table").style.visibility = "visible";
+  document.getElementById("head-class").innerText = "Classe";
+  document.getElementById("head-race").innerText = "Raça";
   document.getElementById("head-background").innerText = "Background";
-  document.getElementById("head-tendencia").innerText = "Tendência";
-  document.getElementById("head-habilidades").innerText = "Habilidades";
-  document.getElementById("classe").innerText = Classe;
-  document.getElementById("raca").innerText = Raca;
-  document.getElementById("background").innerText = Background;
-  document.getElementById("tendencia").innerText = Tendencia;
-  document.getElementById("habilidades").innerText = Habilidades;
+  document.getElementById("head-alignment").innerText = "Tendência";
+  document.getElementById("head-abilities").innerText = "Habilidades";
+  document.getElementById("class").innerText = characterClass;
+  document.getElementById("race").innerText = race;
+  document.getElementById("background").innerText = background;
+  document.getElementById("alignment").innerText = alignment;
+  document.getElementById("abilities").innerText = abilityList;
 }
